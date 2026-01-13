@@ -1,5 +1,6 @@
 import CategoryList from '@/components/CategoryList';
 import ProductCard from '@/components/ProductCard';
+import RecommendationsClient from '@/components/RecommendationsClient';
 
 async function getCategories() {
   const res = await fetch('https://fakestoreapi.com/products/categories', {
@@ -35,6 +36,10 @@ export default async function Home() {
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Categories</h2>
         <CategoryList categories={categories} />
+      </div>
+
+      <div className="mb-8">
+        <RecommendationsClient allProducts={products} />
       </div>
 
       <div className="mb-8">
