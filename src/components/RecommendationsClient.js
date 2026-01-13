@@ -38,13 +38,41 @@ export default function RecommendationsClient({ allProducts }) {
     return null;
   }
 
-  // Show message if cart is empty
+  // Show skeleton if cart is empty
   if (cart.length === 0) {
     return (
-      <div className="bg-base-200 rounded-lg p-8 text-center">
-        <p className="text-base-content/70 text-lg">
-          Add items to your cart to see personalized recommendations
-        </p>
+      <div className="bg-base-200 rounded-lg p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <h2 className="text-2xl font-semibold">Recommended for You</h2>
+          <div className="flex gap-2">
+            {ALGORITHMS.map((algo) => (
+              <button
+                key={algo.id}
+                className="btn btn-sm btn-outline btn-disabled"
+                disabled
+              >
+                {algo.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="text-center mb-6">
+          <p className="text-base-content/70 text-xl font-medium">
+            Add items to your cart to see personalized recommendations
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="card bg-base-100 shadow-xl">
+              <div className="skeleton h-48 w-full rounded-t-2xl"></div>
+              <div className="card-body">
+                <div className="skeleton h-4 w-full mb-2"></div>
+                <div className="skeleton h-4 w-2/3 mb-4"></div>
+                <div className="skeleton h-8 w-full"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
