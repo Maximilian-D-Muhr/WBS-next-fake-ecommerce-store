@@ -1,91 +1,83 @@
-# Fake Store - E-Commerce Demo
+# Fake Store - E-Commerce Application
 
-A modern e-commerce application built with Next.js 16 (App Router), featuring smart product recommendations, shopping cart functionality, and a clean UI powered by DaisyUI.
+A modern e-commerce application built with Next.js 16 (App Router) using the FakeStoreAPI. This project demonstrates server-side rendering, client-side interactivity, state management, and smart product recommendations.
 
-## 🚀 Features
+## Project Goal
 
-### Core Functionality
-- **Product Catalog**: Browse all products from FakeStoreAPI
-- **Category Display**: Visual category badges for easy navigation
-- **Shopping Cart**: Full cart management with localStorage persistence
-- **Smart Recommendations**: 3 AI-powered recommendation algorithms
-- **Real-time Updates**: Cart badge updates instantly across the app
+This project is part of the WBS Coding School curriculum and demonstrates:
+- Implementation of Next.js App Router architecture
+- Server vs Client Component patterns
+- State management with React Context and localStorage
+- Dynamic routing and data fetching from external APIs
+- Recommendation algorithms with switchable logic
+- Responsive UI design with Tailwind CSS and DaisyUI
 
-### Smart Recommendations Engine
-The app features a sophisticated recommendation system with three switchable algorithms:
+**Course Reference:** [Next.js Fake E-Commerce Site](https://learn.wbscodingschool.com/courses/software-engineering/lessons/nextjs/topic/%f0%9f%a7%a9-fake-ecommerce-site-2/)
 
-1. **By Category**: Matches products from the same categories as items in your cart
-2. **By Price**: Suggests products in similar price ranges (±30% of cart average)
-3. **Popular**: Shows highest-rated products not already in your cart
+## Tech Stack
 
-- Shows skeleton loaders during algorithm switching
-- Displays personalized message when cart is empty
-- Auto-refreshes when cart contents change
+- **Framework:** Next.js 16.1.1 (App Router)
+- **UI Library:** React 19.2.3
+- **Styling:** Tailwind CSS 4.x + DaisyUI 5.5.14
+- **Data Source:** [FakeStoreAPI](https://fakestoreapi.com/)
+- **State Management:** React Context API
+- **Persistence:** localStorage
 
-### Shopping Cart Features
-- Add/remove items with quantity controls
-- Inline quantity editing in cart table
-- Line totals and grand total calculations
-- LocalStorage persistence (cart survives page refresh)
-- Clear cart functionality
-- Empty cart state with helpful message
+## Key Features
 
-## 🛠️ Tech Stack
+### Server-Side Rendering
+- Product data fetched server-side for optimal performance
+- Category filtering with dynamic routes
+- SEO-friendly page generation
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 16.1.1 | React framework with App Router |
-| React | 19.2.3 | UI library |
-| Tailwind CSS | 4.x | Utility-first CSS framework |
-| DaisyUI | 5.5.14 | Component library for Tailwind |
-| FakeStoreAPI | - | Product data API |
+### Shopping Cart
+- Add/remove products with quantity controls
+- Persistent cart state using localStorage
+- Real-time cart badge in navigation
+- Inline quantity editing on cart page
 
-## 📁 Project Structure
+### Smart Recommendations
+- Three switchable recommendation algorithms:
+  - **By Category:** Matches products from same categories as cart items
+  - **By Price:** Suggests products in similar price range (±30%)
+  - **Popular:** Shows highest-rated products
+- Skeleton loading states during algorithm switching
+- Visual feedback when cart is empty
+
+### Dynamic Category Pages
+- Server-side product filtering by category
+- Breadcrumb navigation
+- Click-to-filter from category badges on home page
+
+## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── layout.js              # Root layout with Navigation + CartProvider
+│   ├── layout.js              # Root layout with CartProvider
 │   ├── page.js                # Home page (Server Component)
+│   ├── globals.css            # Tailwind + DaisyUI configuration
 │   ├── error.js               # Error boundary
 │   ├── loading.js             # Loading state
-│   ├── globals.css            # Tailwind + DaisyUI imports
-│   └── cart/
-│       └── page.js            # Cart page (Client Component)
+│   ├── cart/
+│   │   └── page.js            # Shopping cart (Client Component)
+│   └── category/
+│       └── [slug]/
+│           └── page.js        # Dynamic category pages
 ├── components/
-│   ├── Navigation.js          # Navbar with cart badge (Client)
-│   ├── CategoryList.js        # Category badges (Server)
-│   ├── ProductCard.js         # Product card with cart controls (Client)
-│   └── RecommendationsClient.js  # Recommendations with algorithms (Client)
+│   ├── Navigation.js          # Navbar with cart badge
+│   ├── CategoryList.js        # Clickable category badges
+│   ├── ProductCard.js         # Product card with cart controls
+│   └── RecommendationsClient.js  # Recommendation engine
 ├── lib/
-│   ├── cartContext.js         # Cart state management (Context API)
-│   ├── formatPrice.js         # Euro price formatting utility
-│   └── recommendationAlgorithms.js  # 3 recommendation algorithms
+│   ├── cartContext.js         # Cart state management
+│   ├── formatPrice.js         # Euro price formatting
+│   └── recommendationAlgorithms.js  # Algorithm implementations
 └── hooks/
-    └── useLocalStorage.js     # LocalStorage sync hook
+    └── useLocalStorage.js     # localStorage synchronization
 ```
 
-## 🎯 Architecture Highlights
-
-### Server vs Client Components
-- **Server Components** (default): Home page, categories, product fetching
-- **Client Components** (opt-in): Cart, product cards, recommendations, navigation
-- Data fetched server-side for instant page loads
-- Cart state managed client-side with Context API
-
-### State Management
-- **Cart State**: React Context + localStorage for persistence
-- **Recommendations**: Client-side computation based on cart contents
-- **URL State**: File-based routing with Next.js App Router
-
-### Key Patterns Used
-- Server-first rendering for optimal performance
-- Client boundaries for interactivity
-- Error boundaries for graceful error handling
-- Suspense boundaries for loading states
-- localStorage hydration without hydration mismatches
-
-## 🚦 Getting Started
+## Setup
 
 ### Prerequisites
 - Node.js 20+ (project uses Node 24)
@@ -95,7 +87,7 @@ src/
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone <repository-url>
 cd next-fake-ecommerce-store
 ```
 
@@ -120,89 +112,31 @@ npm start        # Start production server
 npm run lint     # Run ESLint
 ```
 
-## 🎨 Design System
+## Implementation Highlights
 
-### DaisyUI Components Used
-- `navbar` - Navigation bar
-- `card` - Product cards
-- `badge` - Categories and cart count
-- `table` - Cart table
-- `btn` - All buttons with variants
-- `skeleton` - Loading placeholders
-- `indicator` - Cart badge indicator
-- `loading-spinner` - Loading animation
+### Server vs Client Components
 
-### Color Scheme
-- Primary: Blue (used for actions and highlights)
-- Error: Red (remove/decrease actions)
-- Success: Green (add/increase actions)
-- Base: Neutral grays (backgrounds and text)
+**Server Components (default):**
+- Home page with product and category fetching
+- Category pages with filtered products
+- Static content rendering
 
-### Responsive Breakpoints
-- Mobile: 1 column product grid
-- Tablet (md): 2-3 columns
-- Desktop (lg): 3 columns
-- Large Desktop (xl): 4 columns
-
-## 🧪 Testing the App
-
-### Manual Test Checklist
-
-1. **Home Page**
-   - [ ] Products load and display correctly
-   - [ ] Categories show as badges
-   - [ ] Prices formatted in Euros (€)
-   - [ ] Add to cart button appears on products
-
-2. **Cart Functionality**
-   - [ ] Add product → shows quantity controls
-   - [ ] Increase/decrease quantity works
-   - [ ] Remove button removes item
-   - [ ] Cart badge updates in navigation
-   - [ ] LocalStorage persists on refresh
-
-3. **Recommendations**
-   - [ ] Shows message when cart is empty
-   - [ ] Displays 3 products when cart has items
-   - [ ] Algorithm toggle buttons work
-   - [ ] Skeleton loaders appear during switch
-   - [ ] Doesn't show products already in cart
-
-4. **Cart Page**
-   - [ ] Table displays all cart items
-   - [ ] Line totals calculate correctly
-   - [ ] Grand total is accurate
-   - [ ] Quantity controls work inline
-   - [ ] Empty cart shows helpful message
-
-5. **Edge Cases**
-   - [ ] Decreasing quantity to 0 removes item
-   - [ ] Clear cart empties everything
-   - [ ] Page refresh preserves cart
-   - [ ] Error boundary shows on API failure
-
-## 🔧 Configuration
-
-### Environment Variables
-No environment variables required - API is public and unauthenticated.
-
-### Tailwind Configuration
-Configured in `postcss.config.mjs` with DaisyUI plugin imported in `globals.css`:
-```css
-@import "tailwindcss";
-@plugin "daisyui";
-```
-
-## 📝 Key Implementation Details
+**Client Components (opt-in with 'use client'):**
+- Shopping cart state management
+- Product cards with add-to-cart functionality
+- Recommendation engine with algorithm switching
+- Navigation with dynamic cart badge
 
 ### Cart Logic
-- Quantity never goes below 0
-- Item automatically removed when quantity reaches 0
+
 - Cart stored in localStorage with key: `fakestore-cart`
+- Quantity constraints: never goes below 0, auto-removes at 0
 - Cart structure: `[{ ...product, quantity: number }]`
+- Context API provides global access across all components
 
 ### Price Formatting
-Uses `Intl.NumberFormat` with German locale (de-DE) for Euro formatting:
+
+Uses `Intl.NumberFormat` with German locale for Euro currency:
 ```javascript
 new Intl.NumberFormat('de-DE', {
   style: 'currency',
@@ -211,54 +145,25 @@ new Intl.NumberFormat('de-DE', {
 ```
 
 ### Recommendation Algorithms
-All algorithms are editable in `src/lib/recommendationAlgorithms.js`:
-- **Category Match**: Filters products by matching cart categories
-- **Price Match**: Finds products within ±30% of average cart price
-- **Popularity**: Sorts by rating (highest first)
 
-## 🚀 Deployment
+All algorithms are implemented in `src/lib/recommendationAlgorithms.js` and can be edited independently:
+- Filters out products already in cart
+- Returns maximum 3 products
+- Falls back to alternative products if insufficient matches
 
-### Deploy to Vercel
+## Deployment
+
+This project can be deployed to Vercel with zero configuration:
 1. Push code to GitHub
 2. Import project in Vercel
 3. Deploy with default settings
-4. No build configuration needed
 
-### Build Optimization
-- Next.js automatically optimizes images
-- Server Components reduce JavaScript bundle
-- Static generation where possible
-- API routes cached appropriately
+## Author
 
-## 📚 Learning Resources
+Maximilian D. Muhr - WBS Coding School
+
+## Learning Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [DaisyUI Components](https://daisyui.com/components/)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [FakeStoreAPI](https://fakestoreapi.com/)
-
-## 🎓 Educational Value
-
-This project demonstrates:
-- Next.js App Router architecture
-- Server vs Client Component decisions
-- State management with Context API
-- LocalStorage persistence patterns
-- Recommendation algorithm implementation
-- Error handling and loading states
-- Responsive design with Tailwind/DaisyUI
-
-## 📄 License
-
-This project is for educational purposes as part of WBS Coding School curriculum.
-
-## 🙏 Acknowledgments
-
-- **FakeStoreAPI** for providing free product data
-- **Vercel** for Next.js framework
-- **DaisyUI** for beautiful Tailwind components
-- **WBS Coding School** for the learning opportunity
-
----
-
-**Built with ❤️ using Next.js and DaisyUI**
+- [FakeStoreAPI Documentation](https://fakestoreapi.com/docs)
